@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
+from utils import datacheck
 
 app = Flask(__name__)
-users = {"DW":"work04"}
 
 @app.route("/")
 @app.route("/login/")
@@ -10,14 +10,24 @@ def tmplt():
 
 @app.route("/authenticate/", methods=["POST"])
 def auth():
-    for name in users:
-        if name == request.form["user"]:
-            if users.get(name) == request.form["password"]:
-                return render_template("result.html", result="Success!! :)", resultmsg="You're in!!")
-            else:
-                return render_template("result.html", result="Failure!! :(", resultmsg="Wrong password. Try again!!")
+    users = datacheck.getDict()
+    un = request.form["user"]
+    pw = datacheck.hashPW( request.form["password"] )
+    
+    if request.form["button"] == "Login": #Login
+        if not un in users.keys():
+            msg = "User does not exist!"
+        elif (users[un] != pw):
+            msg = "Wrong password!"
         else:
-            return render_template("result.html", result="Failure!! :(", resultmsg="User does not exist.")
+            msg = "You're in!"
+    else: #Register
+        if un in users.keys():
+            msg = "User already exists!"
+        else:
+            datacheck.addEntry(un,pw)
+            msg = "Good to go!"
+    return render_template( "result.html", resultmsg = msg )
 
 if __name__ == "__main__":
     app.debug = True
