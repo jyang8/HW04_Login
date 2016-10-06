@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, url_for
 from utils import datacheck
 
 app = Flask(__name__)
+app.secret_key = '\xfa\\\xda$\\\x06\xdd2mI\xed\x9bW\xa8A\xa6\x86l\xcd\xe4\xa9L\xf9L\xa8>\xe3 \x05\xf2p\xeb'
 
 @app.route("/")
 @app.route("/login/")
-def tmplt():
+def login():
+    print url_for("login")
     return render_template("login.html")
 
 @app.route("/authenticate/", methods=["POST"])

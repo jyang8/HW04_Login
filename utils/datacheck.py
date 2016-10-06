@@ -16,7 +16,16 @@ def addEntry(username,password):
     data = open( 'data/accs.csv', 'a' )
     data.write( username + "," + password + "\n" )
     data.close()
-        
+    #with open( 'data/accs.csv', 'a' ) as data:
+    #    w = csv.writer(data)
+    #    w.writerow( [username,hashPW(password)] )
     
 def hashPW(password):
     return hashlib.sha224(password).hexdigest()
+
+def loggedOn(key, data):
+    if not key in session.keys(): #not logged in
+        session[key] = data
+    else:
+        return redirect( url_for("login") )
+        
