@@ -16,7 +16,6 @@ def addEntry(username,password):
     data = open( 'data/accs.csv', 'a' )
     data.write( username + "," + password + "\n" )
     data.close()
-        
     
 def hashPW(password):
     return hashlib.sha224(password).hexdigest()

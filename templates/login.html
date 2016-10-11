@@ -7,10 +7,11 @@
 
   <body>
     <center><h2>Hello there.</h2>
+      {{ resultmsg }}
       <form action="/authenticate/" method="POST">
-	Username: <input type="text" name="user">
+	Username: <input type="text" name="user" required>
 	<br>
-	Password: <input type="password" name="password">
+	Password: <input type="password" name="password" required>
 	<br>
 	<input type="submit" name="button" value="Login">
 	<input type="submit" name="button" value="Register">
